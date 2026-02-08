@@ -984,6 +984,7 @@ export class VSCode {
   readonly errors: string[] = [];
   readonly context: { subscriptions: any[]; extensionUri: Uri; workspaceState: any };
   readonly extensions: any[] = [];
+  extensionExports: any = null;
   private _webviewProviders = new Map<string, any>();
   private _browser: Browser;
   private _webViewsByPanelType = new Map<string, Set<Page>>();
@@ -1224,8 +1225,12 @@ export class VSCode {
   }
 
   async activate() {
-    for (const extension of this.extensions)
-      await extension.activate();
+    for (const extension of this.extensions) {
+      const api = await extension.activate();
+      // Store the API from the first extension (the Playwright extension)
+      if (!this.extensionExports && api)
+        this.extensionExports = api;
+    }
 
     for (const [name, provider] of this._webviewProviders) {
       const { webview, pagePromise } = this._createWebviewAndPage();

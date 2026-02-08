@@ -34,6 +34,7 @@ import { LocatorsView } from './locatorsView';
 import { pathToFileURL } from 'url';
 import { TestConfig } from './playwrightTestServer';
 import { findTestEndPosition } from './babelHighlightUtil';
+import type { PlaywrightAPI } from './api';
 
 const stackUtils = new StackUtils({
   cwd: '/ensure_absolute_paths'
@@ -45,9 +46,15 @@ type StepInfo = {
   duration: number;
 };
 
-export async function activate(context: vscodeTypes.ExtensionContext) {
+export async function activate(context: vscodeTypes.ExtensionContext): Promise<PlaywrightAPI> {
+  const extension = new Extension(require('vscode'), context);
   // Do not await, quickly run the extension, schedule work.
-  void new Extension(require('vscode'), context).activate();
+  void extension.activate();
+
+  // Return the public API for other extensions to use
+  return {
+    getTestModelCollection: () => extension.getTestModelCollection()
+  };
 }
 
 export class Extension implements RunHooks {
@@ -176,6 +183,16 @@ export class Extension implements RunHooks {
   dispose() {
     for (const d of this._disposables)
       d?.dispose?.();
+  }
+
+  /**
+   * Returns the TestModelCollection instance for use by other extensions.
+   * This is part of the public API.
+   *
+   * @returns The TestModelCollection instance, or undefined if not yet initialized.
+   */
+  getTestModelCollection(): TestModelCollection | undefined {
+    return this._models;
   }
 
   async activate() {
