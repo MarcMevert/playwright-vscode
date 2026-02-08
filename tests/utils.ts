@@ -161,6 +161,12 @@ export const test = baseTest.extend<TestFixtures, WorkerOptions>({
 
       const extension = new Extension(vscode, vscode.context);
       vscode.extensions.push(extension);
+
+      // Simulate what the exported activate() function does - return the API
+      vscode.extensionExports = {
+        getTestModelCollection: () => extension.getTestModelCollection()
+      };
+
       await vscode.activate();
 
       instances.push(vscode);

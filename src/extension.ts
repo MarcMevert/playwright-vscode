@@ -50,7 +50,7 @@ export async function activate(context: vscodeTypes.ExtensionContext): Promise<P
   const extension = new Extension(require('vscode'), context);
   // Do not await, quickly run the extension, schedule work.
   void extension.activate();
-  
+
   // Return the public API for other extensions to use
   return {
     getTestModelCollection: () => extension.getTestModelCollection()
@@ -188,7 +188,7 @@ export class Extension implements RunHooks {
   /**
    * Returns the TestModelCollection instance for use by other extensions.
    * This is part of the public API.
-   * 
+   *
    * @returns The TestModelCollection instance, or undefined if not yet initialized.
    */
   getTestModelCollection(): TestModelCollection | undefined {

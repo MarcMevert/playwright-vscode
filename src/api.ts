@@ -24,7 +24,7 @@ export interface PlaywrightAPI {
   /**
    * Returns the TestModelCollection instance that manages all Playwright test configurations.
    * The TestModelCollection provides access to test models, projects, and their state.
-   * 
+   *
    * @returns The TestModelCollection instance, or undefined if not yet initialized.
    */
   getTestModelCollection(): TestModelCollection | undefined;
