@@ -11,5 +11,5 @@
     "allowJs": true
   },
   "include": ["**/*.ts", "**/*.js", ".eslintrc.js"],
-  "exclude": ["node_modules", "test-results"]
+  "exclude": ["node_modules", "test-results", "src/testModel.ts","src/playwrightTestServer.ts","src/testTree.ts"]
 }

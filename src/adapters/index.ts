@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-export type TraceViewer = {
-  currentFile(): string | undefined;
-  willRunTests(): Promise<void>;
-  open(file?: string): Promise<void>;
-  reveal?(): Promise<void>;
-  close(): void;
-  infoForTest(): Promise<{
-    type: string;
-    serverUrlPrefix?: string;
-    testConfigFile: string;
-    traceFile?: string;
-    visible: boolean;
-  } | undefined>;
-};
+/**
+ * VS Code adapter layer - bridges core abstractions with VS Code APIs
+ */
+
+export * from './eventAdapter';
+export * from './cancellation';
+export * from './fileSystemObserver';
+export * from './logger';
+export * from './settingsProvider';
+export * from './testServerFactory';

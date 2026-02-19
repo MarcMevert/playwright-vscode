@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-export { types as t } from '@babel/core';
-import { parse } from '@babel/core';
-export { parse };
-export type ParseResult = ReturnType<typeof parse>;
-import traverseFunc from '@babel/traverse';
-export const traverse = traverseFunc;
-export type { SourceLocation } from '@babel/types';
-export { declare } from '@babel/helper-plugin-utils';
+/**
+ * Core abstraction layer - framework agnostic
+ * 
+ * Import directly from individual files instead of using barrel exports.
+ */
 
-export const babelPluginProposalDecorators = require('@babel/plugin-proposal-decorators');
-export const babelPresetTypescript = require('@babel/preset-typescript');
